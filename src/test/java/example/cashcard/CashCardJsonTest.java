@@ -30,4 +30,24 @@ public class CashCardJsonTest {
         assertThat(jsonContent).hasJsonPathNumberValue("@.amount");
         assertThat(jsonContent).extractingJsonPathNumberValue("@.amount").isEqualTo(123.45);
     }
+
+    @Test
+    void cashCardDeserializationTest() throws IOException {
+        // given
+        var cashCardJson = """
+                {
+                    "id": 99,
+                    "amount": 123.45
+                }
+                """;
+
+        // when
+        var cashCardObjectContent = json.parse(cashCardJson);
+        var cashCard = json.parseObject(cashCardJson);
+
+        // then
+        assertThat(cashCardObjectContent).isEqualTo(new CashCard(99L, 123.45));
+        assertThat(cashCard.id()).isEqualTo(99L);
+        assertThat(cashCard.amount()).isEqualTo(123.45);
+    }
 }
