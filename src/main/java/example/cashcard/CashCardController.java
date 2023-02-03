@@ -12,6 +12,10 @@ public class CashCardController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CashCard> findById(@PathVariable Long id) {
+        if (id != 99) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(new CashCard(id, 123.45));
     }
 }
